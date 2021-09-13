@@ -19,6 +19,12 @@ public class BallPhysics : MonoBehaviour
         if (isLaunched)
         {
             transform.position += (Vector3)(velocity) * Time.fixedDeltaTime;
+            
+            if (transform.position.y < transform.localScale.y / 2)
+            {
+                Collision();
+            }
+            
             AirResistance();
             float forceX = AirResistance() * -velocity.normalized.x;
             float forceY = AirResistance() * -velocity.normalized.y + Gravitation();
@@ -31,10 +37,7 @@ public class BallPhysics : MonoBehaviour
                 else velocity.x = 0;
             }
             velocity += new Vector2(forceX, forceY) / mass * Time.fixedDeltaTime;
-            if (transform.position.y < transform.localScale.y / 2)
-            {
-                Collision();
-            }
+            
         }
     }
     private void Update()
